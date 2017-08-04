@@ -34,6 +34,5 @@ public class MoveCamera : MonoBehaviour {
             this.transform.Translate(x, y, 0);
 
         }
-
 	}
 }
