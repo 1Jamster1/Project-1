@@ -11,8 +11,14 @@ public class GenerateGrid : MonoBehaviour {
     private float hexWidth = 1.732f;
     [HideInInspector]
     private float hexHeight = 2f;
+    public Transform yellowTile;
+    public Transform darkGreenTile;
+    public Transform darkBlueTile;
+    public Transform brownTile;
     public Transform greenTile;
     public Transform blueTile;
+    public Transform whiteTile;
+
     public float noiseScale = 1.5f;
     public int seed = 100;
 
@@ -193,13 +199,29 @@ public class GenerateGrid : MonoBehaviour {
 
                 sample = Mathf.PerlinNoise((seed + i)/noiseScale, (seed + j)/noiseScale);
                 
-                if(sample < 0.5)
+                if(sample < 0.4)
                 {
                     r = 0;
                 }
-                else
+                else if(0.4 <= sample && sample < 0.45)
                 {
                     r = 1;
+                }
+                else if(0.45 <= sample && sample < 0.5)
+                {
+                    r = 2;
+                }
+                else if(0.5 <= sample && sample < 0.6)
+                {
+                    r = 3;
+                }
+                else if(0.6 <= sample && sample < 0.85)
+                {
+                    r = 4;
+                }
+                else if(0.85 <= sample && sample < 1)
+                {
+                    r = 5;
                 }
                 gridArray[i].Add(r);
 
@@ -230,13 +252,35 @@ public class GenerateGrid : MonoBehaviour {
                 if(gridArray[i][j] == 0) {
 
                     // Place blue hex
-                    placeHex(blueTile, i, j);
+                    placeHex(darkBlueTile, i, j);
 
-                } else {
+                }
+                else if (gridArray[i][j] == 1)
+                {
 
                     // Place green hex
-                    placeHex(greenTile, i, j);
+                    placeHex(blueTile, i, j);
 
+                }
+                else if (gridArray[i][j] == 2)
+                {
+                    placeHex(yellowTile, i, j);
+                }
+                else if (gridArray[i][j] == 3)
+                {
+                    placeHex(greenTile, i, j);
+                }
+                else if (gridArray[i][j] == 4)
+                {
+                    placeHex(darkGreenTile, i, j);
+                }
+                else if (gridArray[i][j] == 5)
+                {
+                    placeHex(brownTile, i, j);
+                }
+                else
+                {
+                    placeHex(whiteTile, i, j);
                 }
 
             }
