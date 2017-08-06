@@ -6,10 +6,15 @@ public class GenerateGrid : MonoBehaviour {
 
     public int gridSizeX;
     public int gridSizeY;
-    public float hexWidth;
-    public float hexHeight;
+
+    [HideInInspector]
+    private float hexWidth = 1.732f;
+    [HideInInspector]
+    private float hexHeight = 2f;
     public Transform greenTile;
     public Transform blueTile;
+    public float noiseScale = 1.5f;
+    public int seed = 100;
 
     float startX = 0;
     float startY = 0;
@@ -173,6 +178,7 @@ public class GenerateGrid : MonoBehaviour {
         int j;
 
         int r;
+        float sample;
 
 
         // Fill world with Water
@@ -185,6 +191,16 @@ public class GenerateGrid : MonoBehaviour {
                 //TODO: improve the randomgen system
                 r = 0;
 
+                sample = Mathf.PerlinNoise((seed + i)/noiseScale, (seed + j)/noiseScale);
+                
+                if(sample < 0.5)
+                {
+                    r = 0;
+                }
+                else
+                {
+                    r = 1;
+                }
                 gridArray[i].Add(r);
 
             }
@@ -193,7 +209,7 @@ public class GenerateGrid : MonoBehaviour {
         }
 
         // Generate Land
-        randomlyGenerateLand();
+        //randomlyGenerateLand();
 
     }
 
